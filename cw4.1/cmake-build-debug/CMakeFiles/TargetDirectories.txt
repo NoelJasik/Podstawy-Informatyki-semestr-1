@@ -1,0 +1,3 @@
+/home/starflea/CLionProjects/cw4.1/cmake-build-debug/CMakeFiles/szyfrowanie.dir
+/home/starflea/CLionProjects/cw4.1/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/starflea/CLionProjects/cw4.1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
