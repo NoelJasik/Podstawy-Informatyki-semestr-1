@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 #include <vector>
 
@@ -79,6 +80,33 @@ string odszyfrujPrzestawienia(string _txt) {
     return res;
 }
 
+bool odszyfrujZPliku() {
+    fstream file;
+    file.open("szyfr.txt", ios::in);
+    cout << "Wybierz metodę odszyfrowania:" << endl;
+    cout << "1. Cezar" << endl;
+    cout << "2. Przestawienie" << endl;
+    int choice;
+    cin >> choice;
+    string line;
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            if (choice == 1) {
+                cout << odszyfrujCezara(line) << endl;
+            } else if (choice == 2) {
+                cout << odszyfrujPrzestawienia(line) << endl;
+            } else {
+                cout << "Nieprawidłowy wybór." << endl;
+                break;
+            }
+        }
+    } else {
+        cout << "Nie można otworzyć pliku." << endl;
+    }
+    file.close();
+    return true;
+}
+
 bool menu() {
     // https://forum.pasja-informatyki.pl/307571/n-czy-endl https://stackoverflow.com/questions/64253865/whats-the-difference-between-stdendl-and-n chyba endl jest jednak lepszym wyborem xd
     cout << "Wybierz opcję:" << endl;
@@ -86,7 +114,8 @@ bool menu() {
     cout << "2. Odszyfruj Cezara" << endl;
     cout << "3. Szyfr Przestawienia" << endl;
     cout << "4. Odszyfruj Przestawienia" << endl;
-    cout << "5. Wyjście" << endl;
+    cout << "5. Odszyfruj z pliku" << endl;
+    cout << "6. Wyjście" << endl;
     int choice = 0;
     cin >> choice;
     string word;
@@ -112,6 +141,8 @@ bool menu() {
             cout << odszyfrujPrzestawienia(word) << endl;
             return true;
         case 5:
+            return odszyfrujZPliku();
+        case 6:
             cout << "Koniec programu." << endl;
             return false;
         default:

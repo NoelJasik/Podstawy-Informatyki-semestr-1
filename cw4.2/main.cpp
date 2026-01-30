@@ -1,5 +1,6 @@
 #include <iostream>
 #include <time.h>
+#include <random>
 
 using namespace std;
 
@@ -119,7 +120,11 @@ void printArray(int* arr, int size) {
 
 
 int main() {
-clock_t start, stop;
+    // Generowanie tablicy losowych liczb https://stackoverflow.com/questions/55786909/how-do-i-generate-random-numbers-in-a-range
+    random_device seed;
+    mt19937 gen{seed()}; // seed the generator
+    uniform_int_distribution<> dist{1, 100000}; // określamy zasięg;
+    clock_t start, stop;
     double czas;
     cout << "Podaj wielkość tablicy: " << endl;
     int entries = 0;
@@ -133,7 +138,7 @@ clock_t start, stop;
     cout << "Czy wyświetlić tablice? (1 - tak, 0 - nie): ";
     cin >> showArrays;
     for (int i = 0; i < entries; i++) {
-        int value = rand();
+        int value = dist(gen); // zakres od 1 do 100 000
         arrForQuicksort[i] = value;
         arrForBubblesort[i] = value;
         arrForHeapSort[i] = value;
@@ -149,7 +154,7 @@ clock_t start, stop;
 
     stop = clock();
     czas = (double)(stop - start) / CLOCKS_PER_SEC;
-    cout << endl << "czas generowania tablicy: " << czas << " s" << endl;
+    cout << endl << "----- Tablica n: " << entries << " czas generowania tablicy: " << czas << " s ----- " << endl;
     // Quicksort
     start = clock();
     quicksort(arrForQuicksort, 0, entries - 1);
@@ -159,20 +164,6 @@ clock_t start, stop;
     if (showArrays) {
         cout << "----------------------------------------" << endl;
         cout << "Tablice po quick sort" << endl;
-        printArray(arrForQuicksort, entries);
-        printArray(arrForBubblesort, entries);
-        printArray(arrForHeapSort, entries);
-        printArray(arrForSelectionSort, entries);
-    }
-    // Bubble sort
-    start = clock();
-    bubbleSort(arrForBubblesort, entries);
-    stop = clock();
-    czas = (double)(stop - start) / CLOCKS_PER_SEC;
-    cout << endl << "czas sortowania bąbelkowego: " << czas << " s" << endl;
-    if (showArrays) {
-        cout << "----------------------------------------" << endl;
-        cout << "Tablice po bubble sort" << endl;
         printArray(arrForQuicksort, entries);
         printArray(arrForBubblesort, entries);
         printArray(arrForHeapSort, entries);
@@ -205,6 +196,21 @@ clock_t start, stop;
     if (showArrays) {
         cout << "----------------------------------------" << endl;
         cout << "Tablice po selection sort" << endl;
+        printArray(arrForQuicksort, entries);
+        printArray(arrForBubblesort, entries);
+        printArray(arrForHeapSort, entries);
+        printArray(arrForSelectionSort, entries);
+    }
+
+    // Bubble sort
+    start = clock();
+    bubbleSort(arrForBubblesort, entries);
+    stop = clock();
+    czas = (double)(stop - start) / CLOCKS_PER_SEC;
+    cout << endl << "czas sortowania bąbelkowego: " << czas << " s" << endl;
+    if (showArrays) {
+        cout << "----------------------------------------" << endl;
+        cout << "Tablice po bubble sort" << endl;
         printArray(arrForQuicksort, entries);
         printArray(arrForBubblesort, entries);
         printArray(arrForHeapSort, entries);
